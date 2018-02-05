@@ -21,6 +21,10 @@ body {
     font-family: 'Coda', cursive;
 }
 
+dialog {
+  top: 40%;
+}
+
 .container {
     display: flex;
     justify-content: center;
