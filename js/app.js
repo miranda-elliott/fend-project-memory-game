@@ -101,7 +101,7 @@ function checkForMatch() {
   // If all cards have matched, display modal with final score
   if (matchCount === 16) {
     const totalTime = performance.now() - startTime;
-    document.querySelector(".stat-time").textContent = totalTime;
+    document.querySelector(".stat-time").textContent = totalTime.toFixed(2);
     document.querySelector(".stat-moves").textContent = moveCount;
     document.querySelector(".stat-stars").textContent = starRating;
     winModal.show();
@@ -113,6 +113,11 @@ deck.addEventListener("click", function(e) {
   if (e.target.classList.contains("card")) {
     // Get selected card
     const card = e.target;
+
+    // Do nothing if card already open
+    if (card.classList.contains("open")) {
+      return;
+    }
 
     // Display the card's symbol
     toggleCard(card);
