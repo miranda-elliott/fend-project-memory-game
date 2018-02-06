@@ -17,12 +17,8 @@ body {
 }
 
 body {
-    background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
+    background: #ffffff;
     font-family: 'Coda', cursive;
-}
-
-dialog {
-  top: 40%;
 }
 
 .container {
@@ -44,7 +40,8 @@ h1 {
 .deck {
     width: 660px;
     min-height: 680px;
-    background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+    /* background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%); */
+    background: url('../img/80s.jpg');
     padding: 32px;
     border-radius: 10px;
     box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
@@ -71,7 +68,7 @@ h1 {
 
 .deck .card.open {
     transform: rotateY(0);
-    background: #02b3e4;
+    background: #f860d4;
     cursor: default;
 }
 
@@ -81,7 +78,7 @@ h1 {
 
 .deck .card.match {
     cursor: default;
-    background: #02ccba;
+    background: #9b83f0;
     font-size: 33px;
 }
 
@@ -110,4 +107,26 @@ h1 {
 .score-panel .restart {
     float: right;
     cursor: pointer;
+}
+
+/*
+ * Styles for the dialog
+ */
+
+dialog {
+  width: 50%;
+  padding: 32px;
+  border-radius: 10px;
+  box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+  margin: 14em auto;
+}
+
+.play-again {
+  width: 100%;
+  height: 50px;
+  background: #faf678;
+  border: 1px solid #faf678;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 16px;
 }
