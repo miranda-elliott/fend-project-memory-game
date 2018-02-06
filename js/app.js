@@ -89,12 +89,12 @@ function checkForMatch() {
   moveCount++;
   moves.textContent = moveCount;
 
-  // After 8 moves, star rating decreases to 2
-  if (moveCount === 9) {
+  // After 12 moves, star rating decreases to 2
+  if (moveCount === 13) {
     removeStar(stars.children[2].querySelector("i"));
   }
-  // After 16 moves, star rating decreases to 1
-  else if (moveCount === 17) {
+  // After 20 moves, star rating decreases to 1
+  else if (moveCount === 21) {
     removeStar(stars.children[1].querySelector("i"));
   }
 

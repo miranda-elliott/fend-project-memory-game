@@ -1,20 +1,9 @@
 # Memory Game Project
 
-## Table of Contents
-
-* [Instructions](#instructions)
-* [Contributing](#contributing)
-
 ## Instructions
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+Play the classic game of Memory!
 
-To get started, open `js/app.js` and start building out the app's functionality
+Try to keep all 3 stars! After 12 moves, you lose a star. After another 8, you lose another. Luckily you can't lose any more, but cmon, you can do better than that.
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
-
-## Contributing
-
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+Most importantly of all, have fun 🌟
