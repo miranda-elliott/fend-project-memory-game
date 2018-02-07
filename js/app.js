@@ -1,8 +1,44 @@
-let openCards = [], moveCount = 0, matchCount = 0, starRating = 3, startTime = performance.now();
+let openCards = [], moveCount = 0, matchCount = 0, starRating = 3, startTime = performance.now(), timer = null;
 const deck = document.querySelector(".deck");
 const moves = document.querySelector(".moves");
 const stars = document.querySelector(".stars");
 const winModal = document.querySelector(".win-modal");
+const timerDisplay = document.querySelector(".timer");
+
+// Reset timer
+function resetTimer() {
+  // reset start time
+  startTime = performance.now();
+
+  // reset time display
+  timerDisplay.textContent = "0 s";
+
+  // restart timer if stopped
+  if (timer === null) {
+    startTimer();
+  }
+}
+
+// Start/update timer
+function startTimer() {
+  timer = setInterval(function() {
+    // Calculate elapsed time since game start in seconds
+    const now = performance.now();
+    const msElapsedTime = now - startTime;
+    const minElapsedTime = Math.floor((msElapsedTime % (1000 * 60 * 60)) / (1000 * 60));
+    const sElapsedTime = Math.floor((msElapsedTime % (1000 * 60)) / 1000);
+
+    // Set elapsed time in display
+    let displayTime = `${sElapsedTime} s`;
+    if (minElapsedTime > 0) {
+      displayTime = `${minElapsedTime} min ${sElapsedTime} s`;
+    }
+    timerDisplay.textContent = displayTime;
+  }, 1000);
+}
+
+// Call start timer
+startTimer();
 
 // Shuffle cards and reset card class
 function shuffleDeck() {
@@ -32,7 +68,7 @@ function restartGame() {
   matchCount = 0;
 
   // Reset the timer
-  startTime = performance.now();
+  resetTimer();
 }
 
 // Set restart button event listener
@@ -63,6 +99,18 @@ function removeStar(star) {
   star.classList.remove("fa-star");
   star.classList.add("fa-star-o");
   starRating--;
+}
+
+function gameWon() {
+  // stop timer
+  clearInterval(timer);
+  timer = null;
+
+  // show modal with winning stats
+  document.querySelector(".stat-time").textContent = timerDisplay.textContent;
+  document.querySelector(".stat-moves").textContent = moveCount;
+  document.querySelector(".stat-stars").textContent = starRating;
+  winModal.show();
 }
 
 // Check if open cards match
@@ -100,11 +148,7 @@ function checkForMatch() {
 
   // If all cards have matched, display modal with final score
   if (matchCount === 16) {
-    const totalTime = performance.now() - startTime;
-    document.querySelector(".stat-time").textContent = totalTime.toFixed(2);
-    document.querySelector(".stat-moves").textContent = moveCount;
-    document.querySelector(".stat-stars").textContent = starRating;
-    winModal.show();
+    gameWon();
   }
 }
 
