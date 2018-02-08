@@ -6,16 +6,29 @@
     <meta name="description" content="">
     <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-    <dialog class="win-modal">
-      <h3>Congratulations! You won!</h3>
-      <p>Total Time: <span class="stat-time"></span></p>
-      <p>Total Moves: <span class="stat-moves"></span></p>
-      <p>Star Rating: <span class="stat-stars"></span></p>
-      <button class="play-again">Play Again</button>
-    </dialog>
+    <div id="win-modal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3 class="modal-title">Congratulations! You won!</h3>
+          </div>
+          <div class="modal-body">
+            <p>Total Time: <span class="stat-time"></span></p>
+            <p>Total Moves: <span class="stat-moves"></span></p>
+            <p>Star Rating: <span class="stat-stars"></span></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default play-again" data-dismiss="modal">Play Again</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
 
     <div class="container">
         <header>
@@ -29,9 +42,9 @@
         		<li><i class="fa fa-star"></i></li>
         	</ul>
 
-        	<span class="moves">0</span> Moves
+        	Moves: <span class="moves">0</span>
 
-          Elapsed Time: <span class="timer">0 s</span>
+          Time: <span class="timer">0 s</span>
 
           <div class="restart">
         		<i class="fa fa-repeat"></i>
@@ -90,6 +103,8 @@
         </ul>
     </div>
 
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

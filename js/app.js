@@ -1,26 +1,29 @@
-let openCards = [], moveCount = 0, matchCount = 0, starRating = 3, startTime = performance.now(), timer = null;
+let openCards = [], moveCount = 0, matchCount = 0, starRating = 3, firstCard = true;
+let startTime = performance.now(), timer = null;
 const deck = document.querySelector(".deck");
 const moves = document.querySelector(".moves");
 const stars = document.querySelector(".stars");
-const winModal = document.querySelector(".win-modal");
 const timerDisplay = document.querySelector(".timer");
+const winModal = $("#win-modal");
 
 // Reset timer
 function resetTimer() {
-  // reset start time
-  startTime = performance.now();
+  // Stop timer
+  clearInterval(timer);
+  timer = null;
 
-  // reset time display
+  // Set first card to true to trigger timer to restart on card click
+  firstCard = true;
+
+  // Reset time display
   timerDisplay.textContent = "0 s";
-
-  // restart timer if stopped
-  if (timer === null) {
-    startTimer();
-  }
 }
 
 // Start/update timer
 function startTimer() {
+  // Reset start time
+  startTime = performance.now();
+
   timer = setInterval(function() {
     // Calculate elapsed time since game start in seconds
     const now = performance.now();
@@ -36,9 +39,6 @@ function startTimer() {
     timerDisplay.textContent = displayTime;
   }, 1000);
 }
-
-// Call start timer
-startTimer();
 
 // Shuffle cards and reset card class
 function shuffleDeck() {
@@ -79,7 +79,7 @@ document.querySelector(".restart").addEventListener("click", function(e) {
 // Set play again button event listener
 document.querySelector(".play-again").addEventListener("click", function(e) {
   restartGame();
-  winModal.close();
+  winModal.modal("hide");
 });
 
 // Toggle display on card
@@ -102,7 +102,7 @@ function removeStar(star) {
 }
 
 function gameWon() {
-  // stop timer
+  // Stop timer
   clearInterval(timer);
   timer = null;
 
@@ -110,7 +110,7 @@ function gameWon() {
   document.querySelector(".stat-time").textContent = timerDisplay.textContent;
   document.querySelector(".stat-moves").textContent = moveCount;
   document.querySelector(".stat-stars").textContent = starRating;
-  winModal.show();
+  winModal.modal("show");
 }
 
 // Check if open cards match
@@ -147,7 +147,7 @@ function checkForMatch() {
   }
 
   // If all cards have matched, display modal with final score
-  if (matchCount === 16) {
+  if (matchCount === 8) {
     gameWon();
   }
 }
@@ -157,6 +157,14 @@ deck.addEventListener("click", function(e) {
   if (e.target.classList.contains("card")) {
     // Get selected card
     const card = e.target;
+
+    // Start timer if first card to be opened
+    if (firstCard) {
+      startTimer();
+    }
+
+    // Set first card to false
+    firstCard = false;
 
     // Do nothing if card already open
     if (card.classList.contains("open")) {
