@@ -6,7 +6,9 @@ const stars = document.querySelector(".stars");
 const timerDisplay = document.querySelector(".timer");
 const winModal = $("#win-modal");
 
-// Reset timer
+/**
+* @description Reset timer to 0 s
+*/
 function resetTimer() {
   // Stop timer
   clearInterval(timer);
@@ -19,7 +21,9 @@ function resetTimer() {
   timerDisplay.textContent = "0 s";
 }
 
-// Start/update timer
+/**
+* @description Start timer
+*/
 function startTimer() {
   // Reset start time
   startTime = performance.now();
@@ -40,7 +44,9 @@ function startTimer() {
   }, 1000);
 }
 
-// Shuffle cards and reset card class
+/**
+* @description Shuffle and close all cards
+*/
 function shuffleDeck() {
   for (let i = deck.children.length; i >= 0; i--) {
     const newCard = deck.children[Math.random() * i | 0];
@@ -49,16 +55,15 @@ function shuffleDeck() {
   }
 }
 
-// Restart game
+/**
+* @description Restart game
+*/
 function restartGame() {
   // Shuffle the deck
   shuffleDeck();
 
   // Reset the star rating
-  starRating = 3;
-  for (let i=0; i<3; i++) {
-    resetStar(stars.children[i].querySelector("i"));
-  }
+  resetStarRating();
 
   // Reset the move counter
   moveCount = 0;
@@ -71,49 +76,54 @@ function restartGame() {
   resetTimer();
 }
 
-// Set restart button event listener
-document.querySelector(".restart").addEventListener("click", function(e) {
-  restartGame();
-});
-
-// Set play again button event listener
-document.querySelector(".play-again").addEventListener("click", function(e) {
-  restartGame();
-  winModal.modal("hide");
-});
-
-// Toggle display on card
+/**
+* @description Open/close card
+*/
 function toggleCard(card) {
   card.classList.toggle("open");
   card.classList.toggle("show");
 }
 
-// Reset star
-function resetStar(star) {
-  star.classList.add("fa-star");
-  star.classList.remove("fa-star-o");
+/**
+* @description Reset star rating to 3
+*/
+function resetStarRating() {
+  starRating = 3;
+  for (let i=0; i<3; i++) {
+    const star = stars.children[i].querySelector("i");
+    star.classList.add("fa-star");
+    star.classList.remove("fa-star-o");
+  }
 }
 
-// Remove star
-function removeStar(star) {
+/**
+* @description Decrease star rating by 1
+* @param {HTMLElement} star to remove
+*/
+function decreaseStarRating(star) {
   star.classList.remove("fa-star");
   star.classList.add("fa-star-o");
   starRating--;
 }
 
+/**
+* @description Stop timer and show congratulations modal when game won
+*/
 function gameWon() {
   // Stop timer
   clearInterval(timer);
   timer = null;
 
-  // show modal with winning stats
+  // Show modal with winning stats
   document.querySelector(".stat-time").textContent = timerDisplay.textContent;
   document.querySelector(".stat-moves").textContent = moveCount;
   document.querySelector(".stat-stars").textContent = starRating;
   winModal.modal("show");
 }
 
-// Check if open cards match
+/**
+* @description Check if open cards match
+*/
 function checkForMatch() {
   // If the cards do match, lock the cards in the open position and increment the match counter
   if (openCards[0].querySelector("i").classList[1] ===
@@ -139,11 +149,11 @@ function checkForMatch() {
 
   // After 12 moves, star rating decreases to 2
   if (moveCount === 13) {
-    removeStar(stars.children[2].querySelector("i"));
+    decreaseStarRating(stars.children[2].querySelector("i"));
   }
   // After 20 moves, star rating decreases to 1
   else if (moveCount === 21) {
-    removeStar(stars.children[1].querySelector("i"));
+    decreaseStarRating(stars.children[1].querySelector("i"));
   }
 
   // If all cards have matched, display modal with final score
@@ -184,4 +194,14 @@ deck.addEventListener("click", function(e) {
       }, 600);
     }
   }
+});
+
+// Set restart button event listener
+document.querySelector(".restart").addEventListener("click", function(e) {
+  restartGame();
+});
+
+// Set play again button event listener
+document.querySelector(".play-again").addEventListener("click", function(e) {
+  restartGame();
 });
